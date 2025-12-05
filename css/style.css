@@ -8,6 +8,66 @@ body {
     background-color:#f4f6f8; 
     color:#333; 
 }
+#login-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#login-box {
+    background: #fff;
+    padding: 40px 30px;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+#login-box .title {
+    margin-bottom: 25px;
+    color: #2c3e50;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+#login-form .input-field {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+#login-form .input-field:focus {
+    outline: none;
+    border-color: #1abc9c;
+    box-shadow: 0 0 6px rgba(26,188,156,0.3);
+}
+
+#submit-btn {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    background: #1abc9c;
+    color: #fff;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+#submit-btn:hover {
+    background: #16a085;
+    transform: translateY(-2px);
+}
+
+#submit-btn:active {
+    transform: translateY(0);
+}
+
 header {
      background-color:#007bff; 
      color:white; 
@@ -33,10 +93,6 @@ header {
 }
 .sidebar a:hover { 
     background-color:#495057; 
-}
-.main { 
-    margin-left:220px; 
-    padding:20px; 
 }
 table { 
     width:100%; 
