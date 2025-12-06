@@ -58,5 +58,12 @@
     </table>
 </main>
 
+
+
+<script>
+    document.getElementById("add-btn").addEventListener("click", function() {
+        window.location.href = "../clients/add_client.php";
+    });
+</script>
 </body>
 </html>

@@ -17,7 +17,7 @@
         </div>
         <div class="main">
             <h2>Effectuer un dépôt ou retrait</h2>
-            <form>
+            <form id="form">
                 <select required>
                 <option value="">Sélectionner un compte</option>
                 <option value="1">Ali - Courant</option>

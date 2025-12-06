@@ -61,5 +61,13 @@
     </table>
 </main>
 
+
+
+
+<script>
+    document.getElementById("add-btn").addEventListener("click", function() {
+        window.location.href = "../accounts/add_account.php";
+    });
+</script>
 </body>
 </html>
