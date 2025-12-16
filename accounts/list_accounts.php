@@ -36,11 +36,11 @@
         </tr>
 
         <tr class="table-row">
-            <td>1</td>
-            <td>Ali</td>
-            <td>Courant</td>
-            <td>1000.00</td>
-            <td>Actif</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
             <td class="actions">
                 <a class="edit">Modifier</a> |
                 <a class="delete">Supprimer</a>
@@ -48,11 +48,11 @@
         </tr>
 
         <tr class="table-row">
-            <td>2</td>
-            <td>elfarh</td>
-            <td>Épargne</td>
-            <td>1500.00</td>
-            <td>Actif</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
             <td class="actions">
                 <a class="edit">Modifier</a> |
                 <a class="delete">Supprimer</a>

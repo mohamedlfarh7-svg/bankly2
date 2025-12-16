@@ -7,15 +7,15 @@
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <header>Bankly V2 - Transactions</header>
-        <div class="sidebar">
-    <a class="nav-link" href="../dashboard/dashboard.php">Tableau de bord</a>
-    <a class="nav-link" href="../clients/list_clients.php">Clients</a>
-    <a class="nav-link" href="../accounts/list_accounts.php">Comptes</a>
-    <a class="nav-link" href="../transactions/list_transactions.php">Transactions</a>
-    <a class="nav-link" href="../auth/login.php">Déconnexion</a>
-        </div>
-        <div class="main">
+    <header id="top-header">Bankly V2 - Transactions</header>
+    <aside id="sidebar">
+        <a class="nav-link" href="../dashboard/dashboard.php">Tableau de bord</a>
+        <a class="nav-link" href="../clients/list_clients.php">Clients</a>
+        <a class="nav-link" href="../accounts/list_accounts.php">Comptes</a>
+        <a class="nav-link" href="../transactions/list_transactions.php">Transactions</a>
+        <a class="nav-link" href="../auth/login.php">Déconnexion</a>
+    </aside>
+        <div id="main-content">
             <h2>Effectuer un dépôt ou retrait</h2>
             <form id="form">
                 <select required>

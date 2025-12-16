@@ -10,26 +10,26 @@
     
 <header id="top-header">Bankly V2 - Tableau de bord</header>
 
-<div class="sidebar">
+<aside id="sidebar">
     <a class="nav-link" href="../dashboard/dashboard.php">Tableau de bord</a>
     <a class="nav-link" href="../clients/list_clients.php">Clients</a>
     <a class="nav-link" href="../accounts/list_accounts.php">Comptes</a>
     <a class="nav-link" href="../transactions/list_transactions.php">Transactions</a>
     <a class="nav-link" href="../auth/login.php">Déconnexion</a>
-</div>
+</aside>
 
-<div class="main-content">
-    <h2 class="page-title">Statistiques rapides</h2>
-
-    <button class="btn-primary">Actualiser</button>
-
+<div id="main-content">
+    <div class="header-actions">
+        <h2 class="title">Statistiques rapides</h2>
+        <button id="btn-primary">Actualiser</button>
+    </div>
     <table class="data-table">
         <tr>
             <th>Nombre de clients</th>
             <th>Nombre de comptes</th>
             <th>Total transactions du jour</th>
         </tr>
-        <tr>  
+        <tr class="table-row">  
             <td>12</td>
             <td>8</td>
             <td>2500.00</td>

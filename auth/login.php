@@ -1,19 +1,47 @@
 <?php
-session_start();
+require_once "../config.php";
 
-$msg = '';
+if(isset($_POST['submits'])) { 
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $cpassword = $_POST['cpassword'];
+    $role = $_POST['role'];
 
-if(isset($_POST['submit'])){
-
-    $name = $_POST['names'];
-    $password = $_POST['passwords'];
-    if($name === "admin" && $password === "admin123"){
-        $_SESSION['admin'] = true;
-        header("Location:../dashboard/dashboard.php");
-        exit;
-    } else {
-        $msg = "Username ou mot de passe incorrect !";
+    if($password !== $cpassword){
+        die('Les mots de passe sont différents !');
     }
+
+    $hashpassword = password_hash($password, PASSWORD_DEFAULT);
+
+    if($role !== 'admin' && $role !== 'agent'){
+        die('Rôle invalide !');
+    }
+
+    $query = "SELECT * FROM utilisateur WHERE username='$name' OR email='$email'";
+    $result = mysqli_query($conn, $query);
+    if(mysqli_num_rows($result) > 0){
+        die('Le nom de utilisateur ou le email existe déjà. Veuillez en choisir un autre.');
+    }
+
+    $insert = "INSERT INTO utilisateur (username, email, password, role) 
+               VALUES ('$name', '$email', '$hashpassword', '$role')";
+
+    if(mysqli_query($conn, $insert)){
+        echo "Inscription réussie ! Vous pouvez maintenant vous connecter.";
+    } else {
+        echo "Erreur lors de l'inscription : " . mysqli_error($conn);
+    }
+}
+if(isset($_POST['submit'])){
+    $names = $_POST['names'];
+    $passwords = $_POST['passwords'];
+
+    $query = "SELECT * FROM utilisateur WHERE username='$names'";
+    $result = mysqli_query($conn, $query);
+
+    
+    
 }
 ?>
 <!DOCTYPE html>
@@ -200,6 +228,10 @@ if(isset($_POST['submit'])){
             border:2px solid #fff ;
             box-shadow: none;
         }
+        @media(max-width=465px){
+        
+             
+        }
     </style>
 </head>
 <body>
@@ -248,6 +280,13 @@ if(isset($_POST['submit'])){
                 <div class="input-box">
                     <input type="password" placeholder="confirm password" name="cpassword" required>
                     <i class="fa-solid fa-lock"></i>
+                </div>
+                <div class="input-box">
+                    <select name="role" required>
+                        <option value="">-- Choisir le rôle --</option>
+                        <option value="admin">Admin</option>
+                        <option value="agent">Agent</option>
+                    </select>
                 </div>
                 <button type="submit" class="btn" name="submits">register</button>
                 <p>or register with social platform</p>
