@@ -1,3 +1,12 @@
+<?php
+session_start();
+if (!isset($_SESSION['username'])) {
+    header("Location: ../auth/login.php");
+    exit();
+}
+$username = $_SESSION['username'];
+$role = $_SESSION['role'];
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -7,15 +16,20 @@
 <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
-    
-<header id="top-header">Bankly V2 - Tableau de bord</header>
+
+<header id="top-header">
+Bankly V2 - Tableau de bord | Bienvenue <?php echo $username; ?> (<?php echo $role; ?>)
+</header>
 
 <aside id="sidebar">
     <a class="nav-link" href="../dashboard/dashboard.php">Tableau de bord</a>
     <a class="nav-link" href="../clients/list_clients.php">Clients</a>
-    <a class="nav-link" href="../accounts/list_accounts.php">Comptes</a>
-    <a class="nav-link" href="../transactions/list_transactions.php">Transactions</a>
-    <a class="nav-link" href="../auth/login.php">Déconnexion</a>
+    <?php if($role === 'admin'){ ?>
+        <a class="nav-link" href="../accounts/list_accounts.php">Comptes</a>
+        <a class="nav-link" href="../transactions/list_transactions.php">Transactions</a>
+    <?php } ?>
+
+    <a class="nav-link" href="../auth/logout.php">Déconnexion</a>
 </aside>
 
 <div id="main-content">
@@ -29,7 +43,7 @@
             <th>Nombre de comptes</th>
             <th>Total transactions du jour</th>
         </tr>
-        <tr class="table-row">  
+        <tr class="table-row">
             <td>12</td>
             <td>8</td>
             <td>2500.00</td>

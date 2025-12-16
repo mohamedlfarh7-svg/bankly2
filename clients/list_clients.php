@@ -1,3 +1,15 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['username'])) {
+    header("Location: ../auth/login.php");
+    exit();
+}
+
+$username = $_SESSION['username'];
+$role = $_SESSION['role'];
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -14,9 +26,12 @@
 <aside id="sidebar">
     <a class="nav-link" href="../dashboard/dashboard.php">Tableau de bord</a>
     <a class="nav-link" href="../clients/list_clients.php">Clients</a>
-    <a class="nav-link" href="../accounts/list_accounts.php">Comptes</a>
-    <a class="nav-link" href="../transactions/list_transactions.php">Transactions</a>
-    <a class="nav-link" href="../auth/login.php">Déconnexion</a>
+    <?php if($role === 'admin'){ ?>
+        <a class="nav-link" href="../accounts/list_accounts.php">Comptes</a>
+        <a class="nav-link" href="../transactions/list_transactions.php">Transactions</a>
+    <?php } ?>
+
+    <a class="nav-link" href="../auth/logout.php">Déconnexion</a>
 </aside>
 
 <main id="main-content">

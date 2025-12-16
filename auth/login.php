@@ -30,7 +30,7 @@ if(isset($_POST['submits'])) {
     if(mysqli_query($conn, $insert)){
         echo "Inscription réussie ! Vous pouvez maintenant vous connecter.";
     } else {
-        echo "Erreur lors de l'inscription : " . mysqli_error($conn);
+        echo "Erreur lors de l'inscription:" . mysqli_error($conn);
     }
 }
 if(isset($_POST['submit'])){
@@ -40,8 +40,21 @@ if(isset($_POST['submit'])){
     $query = "SELECT * FROM utilisateur WHERE username='$names'";
     $result = mysqli_query($conn, $query);
 
-    
-    
+    if(mysqli_num_rows($result)===0){
+        echo "ce compte n'existe pas";
+    }
+    else{
+        $user=mysqli_fetch_assoc($result);
+        if(password_verify($passwords,$user['password'])){
+            session_start();
+                $_SESSION['username'] = $user['username'];
+                $_SESSION['role'] = $user['role'];
+            header("Location: ../dashboard/dashboard.php");
+            exit();
+        }else{
+            echo "mot passe ou name inccorrect";
+        }
+    }
 }
 ?>
 <!DOCTYPE html>
