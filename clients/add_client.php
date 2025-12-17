@@ -1,3 +1,37 @@
+<?php 
+session_start();
+require_once "../config.php";
+
+if (!isset($_SESSION['username'])) {
+    header("Location: ../auth/login.php");
+    exit();
+}
+
+if(isset($_POST['submit'])){
+    $f_name = $_POST['fullname'];
+    $email = $_POST['email'];
+    $cin = $_POST['cin'];
+    $phone = $_POST['phone'];
+
+    $query = "SELECT*FROM clients WHERE nom_complet = '$f_name' or email = '$email' or cin = '$cin' or telephone = '$phone'";
+    $result = mysqli_query($conn , $query);
+
+    if(mysqli_num_rows($result)>0){
+        die('cette client deja exciste');
+    }
+   $insert = "INSERT INTO clients (nom_complet, email, cin, telephone) 
+             VALUES ('$f_name', '$email', '$cin', '$phone')";
+
+    if(mysqli_query($conn,$insert)){
+        header('Location: ../clients/list_clients.php');
+        exit();
+    }else {
+        echo "erreur de ajout :" . mysqli_error($conn);
+    }
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -68,7 +102,7 @@ body {
         <input type="email" name="email" id="email" class="input-field" placeholder="Email" required>
         <input type="text" name="cin" id="cin" class="input-field" placeholder="CIN" required>
         <input type="text" name="phone" id="phone" class="input-field" placeholder="Téléphone">
-        <button type="submit" id="submit-btn" class="btn-submit">Enregistrer le client</button>
+        <button type="submit" id="submit-btn" class="btn-submit" name="submit">Enregistrer le client</button>
     </form>
 </div>
 </body>

@@ -25,8 +25,7 @@
     <form id="account-form">
         <select class="input-field" required>
             <option value="">Sélectionner un client</option>
-            <option value="1">Ali</option>
-            <option value="2">mohamed</option>
+            <?php while($row=) ?>
         </select>
 
         <select class="input-field" required>
