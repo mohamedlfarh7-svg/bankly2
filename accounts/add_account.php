@@ -1,4 +1,5 @@
 <?php 
+
 session_start();
 require_once "../config.php";
 
@@ -8,31 +9,28 @@ if (!isset($_SESSION['username'])) {
 }
 
 if(isset($_POST['submit'])){
-    $client = $_POST['client'];
+    $client = (int) $_POST['client'];
     $type = $_POST['type'];
     $solde = $_POST['solde'];
 
-    $query = "SELECT * FROM comptes WHERE client_id = '$client'";
-    $result = mysqli_query($conn ,$query);
+    $insert = "
+        INSERT INTO comptes (client_id, type_compte, solde)
+        VALUES ($client, '$type', '$solde')
+    ";
 
-    if(mysqli_num_rows($result)>0){
-        echo 'cette client est deja exciste';
-    }
-
-    $insert = "INSERT INTO comptes (client_id,type_compte,solde)
-                VALUES ('$client','$type','$solde')";
-    if(mysqli_query($conn,$insert)){
-        header('Location: ../clients/list_clients.php');
+    if(mysqli_query($conn, $insert)){
+        header("Location: ../accounts/list_accounts.php");
         exit();
-    }else {
-        echo "erreur de ajout :" . mysqli_error($conn);
+    } else {
+        echo "Erreur : " . mysqli_error($conn);
     }
 }
 
-$clientquery = "SELECT*FROM clients";
+$clientquery = "SELECT * FROM clients";
 $clientResult = mysqli_query($conn , $clientquery);
 
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>

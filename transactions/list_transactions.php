@@ -42,7 +42,10 @@ $transactionResult = mysqli_query($conn, $transactionQuery)
     <a class="nav-link" href="../auth/logout.php">Déconnexion</a>
 </aside>
     <main id="main-content">
-        <h2 class="title">Historique des transactions</h2>
+            <div class="header-actions">
+                <h2 class="title">Historique des transactions</h2>
+                <button id="add-btn">Make Transaction</button>
+            </div>
 
         <table id="transactions-table">
             <tr>
@@ -64,6 +67,10 @@ $transactionResult = mysqli_query($conn, $transactionQuery)
     <?php } ?>
         </table>
     </main>
-
+<script>
+        document.getElementById("add-btn").addEventListener("click", function() {
+        window.location.href = "../transactions/make_transaction.php";
+    });
+</script>
 </body>
 </html>
