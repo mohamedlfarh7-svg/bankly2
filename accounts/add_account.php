@@ -1,3 +1,38 @@
+<?php 
+session_start();
+require_once "../config.php";
+
+if (!isset($_SESSION['username'])) {
+    header("Location: ../auth/login.php");
+    exit();
+}
+
+if(isset($_POST['submit'])){
+    $client = $_POST['client'];
+    $type = $_POST['type'];
+    $solde = $_POST['solde'];
+
+    $query = "SELECT * FROM comptes WHERE client_id = '$client'";
+    $result = mysqli_query($conn ,$query);
+
+    if(mysqli_num_rows($result)>0){
+        echo 'cette client est deja exciste';
+    }
+
+    $insert = "INSERT INTO comptes (client_id,type_compte,solde)
+                VALUES ('$client','$type','$solde')";
+    if(mysqli_query($conn,$insert)){
+        header('Location: ../clients/list_clients.php');
+        exit();
+    }else {
+        echo "erreur de ajout :" . mysqli_error($conn);
+    }
+}
+
+$clientquery = "SELECT*FROM clients";
+$clientResult = mysqli_query($conn , $clientquery);
+
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -22,21 +57,25 @@
 <main id="main-content">
     <h2 class="title">Ajouter un nouveau compte</h2>
 
-    <form id="account-form">
-        <select class="input-field" required>
+    <form id="account-form" method="POST">
+        <select class="input-field" name="client" required>
             <option value="">Sélectionner un client</option>
-            <?php while($row=) ?>
+            <?php while( $client = mysqli_fetch_assoc($clientResult)){ ?>
+                <option value="<?php echo $client['client_id']; ?>">
+                    <?php echo $client['client_id']; ?>
+                </option>
+            <?php } ?>
         </select>
 
-        <select class="input-field" required>
+        <select class="input-field" name="type" required>
             <option value="">Type de compte</option>
             <option value="courant">Courant</option>
             <option value="épargne">Épargne</option>
         </select>
 
-        <input class="input-field" type="number" placeholder="Solde initial" required>
+        <input class="input-field" type="number" placeholder="Solde initial" name="solde" required>
 
-        <button id="submit-btn" type="submit">Créer le compte</button>
+        <button id="submit-btn" type="submit" name="submit">Créer le compte</button>
     </form>
 </main>
 
