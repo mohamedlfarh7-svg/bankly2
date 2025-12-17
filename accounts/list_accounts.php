@@ -1,12 +1,26 @@
-<?php 
 
+<?php
 session_start();
-if(!isset($_SESSION['username']) || $_SESSION['role'] !== 'admin'){
+
+require_once "../config.php";
+
+if(!isset($_SESSION['username'])){
+    header("Location: ../auth/login.php");
+    exit();
+}
+
+if($_SESSION['role'] !== 'admin'){
     header("Location: ../dashboard/dashboard.php");
     exit();
-    
 }
+$username = $_SESSION['username'];
+$role = $_SESSION['role'];
+
+$accountQuery = "SELECT a.compte_id, a.client_id, a.type_compte, a.solde, a.statut, a.date_creation FROM comptes a ORDER BY a.compte_id ASC";
+$accountResult = mysqli_query($conn , $accountQuery);
+
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -23,9 +37,12 @@ if(!isset($_SESSION['username']) || $_SESSION['role'] !== 'admin'){
 <aside id="sidebar">
     <a class="nav-link" href="../dashboard/dashboard.php">Tableau de bord</a>
     <a class="nav-link" href="../clients/list_clients.php">Clients</a>
-    <a class="nav-link" href="../accounts/list_accounts.php">Comptes</a>
-    <a class="nav-link" href="../transactions/list_transactions.php">Transactions</a>
-    <a class="nav-link" href="../auth/login.php">Déconnexion</a>
+    <?php if($role === 'admin'){ ?>
+        <a class="nav-link" href="../accounts/list_accounts.php">Comptes</a>
+        <a class="nav-link" href="../transactions/list_transactions.php">Transactions</a>
+    <?php } ?>
+
+    <a class="nav-link" href="../auth/logout.php">Déconnexion</a>
 </aside>
 
 <main id="main-content">
@@ -41,32 +58,27 @@ if(!isset($_SESSION['username']) || $_SESSION['role'] !== 'admin'){
             <th class="column-title">Type</th>
             <th class="column-title">Solde</th>
             <th class="column-title">Statut</th>
+            <th class="column-title">Date</th>
             <th class="column-title">Actions</th>
-        </tr>
 
-        <tr class="table-row">
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+        </tr>
+    <?php while($row = mysqli_fetch_assoc($accountResult)){?>
+
+            <tr class="table-row">
+            <td><?php echo $row['compte_id']; ?></td>
+            <td><?php echo $row['client_id']; ?></td>
+            <td><?php echo $row['type_compte']; ?></td>
+            <td><?php echo $row['solde']; ?></td>
+            <td><?php echo $row['statut']; ?></td>
+            <td><?php echo $row['date_creation']; ?></td>
             <td class="actions">
                 <a class="edit">Modifier</a> |
                 <a class="delete">Supprimer</a>
             </td>
         </tr>
+    <?php }?>
 
-        <tr class="table-row">
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td class="actions">
-                <a class="edit">Modifier</a> |
-                <a class="delete">Supprimer</a>
-            </td>
-        </tr>
+
     </table>
 </main>
 

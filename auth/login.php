@@ -49,6 +49,7 @@ if(isset($_POST['submit'])){
             session_start();
                 $_SESSION['username'] = $user['username'];
                 $_SESSION['role'] = $user['role'];
+                $_SESSION['user_id'] = $user['id'];
             header("Location: ../dashboard/dashboard.php");
             exit();
         }else{
@@ -83,7 +84,7 @@ if(isset($_POST['submit'])){
         .container{
             position: relative;
             width: 850px;
-            height: 550px;
+            height: 650px;
             background: #fff;
             margin: 20px;
             border-radius: 30px;
@@ -150,6 +151,17 @@ if(isset($_POST['submit'])){
             top: 50%;
             transform: translateY(-50%);
             font-size: 20px;
+        }
+        .input-box select{
+            width: 100%;
+            padding: 13px 50px 13px 20px;
+            background-color: #eee;
+            border-radius: 8px;
+            border: none;
+            outline: none;
+            font-size: 16px;
+            color: #333;
+            font-weight: 500;
         }
         .forgot-link{
             margin: -15px 0 15px;

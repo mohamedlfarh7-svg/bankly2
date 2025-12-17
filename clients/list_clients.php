@@ -1,5 +1,6 @@
 <?php
 session_start();
+require_once "../config.php";
 
 if (!isset($_SESSION['username'])) {
     header("Location: ../auth/login.php");
@@ -8,7 +9,11 @@ if (!isset($_SESSION['username'])) {
 
 $username = $_SESSION['username'];
 $role = $_SESSION['role'];
+
+$query = "SELECT * FROM clients";
+$result = mysqli_query($conn, $query);
 ?>
+
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -37,40 +42,40 @@ $role = $_SESSION['role'];
 <main id="main-content">
     <div class="header-actions">
         <h2 class="title">Liste des clients</h2>
+    <?php if($role === 'admin'){ ?>
         <button id="add-btn">Ajouter un client</button>
+    <?php } ?>
     </div>
 
-    <table id="clients-table">
-        <tr>
-            <th class="column-title">ID</th>
-            <th class="column-title">Nom</th>
-            <th class="column-title">Email</th>
-            <th class="column-title">CIN</th>
-            <th class="column-title">Actions</th>
-        </tr>
-
-        <tr class="table-row">
-            <td>1</td>
-            <td>Ali</td>
-            <td>ali@mail.com</td>
-            <td>A123</td>
-            <td class="actions">
-                <a class="edit">Modifier</a> |
-                <a class="delete">Supprimer</a>
-            </td>
-        </tr>
-
-        <tr class="table-row">
-            <td>2</td>
-            <td>mohamed</td>
-            <td>elfarh@mail.com</td>
-            <td>B456</td>
-            <td class="actions">
-                <a class="edit">Modifier</a> |
-                <a class="delete">Supprimer</a>
-            </td>
-        </tr>
-    </table>
+<table id="clients-table">
+    <tr>
+        <th>ID</th>
+        <th>Nom complet</th>
+        <th>Email</th>
+        <th>CIN</th>
+        <th>Téléphone</th>
+        <th>Date de création</th>
+        <?php if($role === 'admin'){ ?>
+        <th>Actions</th>
+        <?php } ?>
+    </tr>
+    <?php while($client = mysqli_fetch_assoc($result)){ ?>
+    <tr class="table-row">
+        <td><?php echo $client['client_id']; ?></td>
+        <td><?php echo $client['nom_complet']; ?></td>
+        <td><?php echo $client['email']; ?></td>
+        <td><?php echo $client['cin']; ?></td>
+        <td><?php echo $client['telephone']; ?></td>
+        <td><?php echo $client['date_creation']; ?></td>
+        <?php if($role === 'admin'){ ?>
+        <td class="actions">
+            <a href="edit_client.php?id=<?php echo $client['client_id']; ?>" class="edit">Modifier</a> |
+            <a href="delete_client.php?id=<?php echo $client['client_id']; ?>" class="delete">Supprimer</a>
+        </td>
+        <?php } ?>
+    </tr>
+    <?php } ?>
+</table>
 </main>
 
 

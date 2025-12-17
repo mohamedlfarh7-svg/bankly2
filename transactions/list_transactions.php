@@ -1,12 +1,23 @@
-<?php 
 
+<?php
 session_start();
-if(!isset($_SESSION['username']) || $_SESSION['role'] !== 'admin'){
+require_once "../config.php";
+if(!isset($_SESSION['username'])){
+    header("Location: ../auth/login.php");
+    exit();
+}
+
+if($_SESSION['role'] !== 'admin'){
     header("Location: ../dashboard/dashboard.php");
     exit();
-    
 }
+$username = $_SESSION['username'];
+$role = $_SESSION['role'];
+
+$transactionQuery = "SELECT t.transaction_id, t.compte_id, t.type_transaction, t.montant, t.date_transaction FROM transactions t ORDER BY t.date_transaction DESC";
+$transactionResult = mysqli_query($conn, $transactionQuery) 
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -20,14 +31,16 @@ if(!isset($_SESSION['username']) || $_SESSION['role'] !== 'admin'){
 
     <header id="top-header">Bankly V2 - Transactions</header>
 
-    <aside id="sidebar">
-        <a class="nav-link" href="../dashboard/dashboard.php">Tableau de bord</a>
-        <a class="nav-link" href="../clients/list_clients.php">Clients</a>
+<aside id="sidebar">
+    <a class="nav-link" href="../dashboard/dashboard.php">Tableau de bord</a>
+    <a class="nav-link" href="../clients/list_clients.php">Clients</a>
+    <?php if($role === 'admin'){ ?>
         <a class="nav-link" href="../accounts/list_accounts.php">Comptes</a>
         <a class="nav-link" href="../transactions/list_transactions.php">Transactions</a>
-        <a class="nav-link" href="../auth/login.php">Déconnexion</a>
-    </aside>
+    <?php } ?>
 
+    <a class="nav-link" href="../auth/logout.php">Déconnexion</a>
+</aside>
     <main id="main-content">
         <h2 class="title">Historique des transactions</h2>
 
@@ -40,21 +53,15 @@ if(!isset($_SESSION['username']) || $_SESSION['role'] !== 'admin'){
                 <th class="column-title">Date</th>
             </tr>
 
-            <tr class="table-row">
-                <td>1</td>
-                <td>Courant</td>
-                <td></td>
-                <td>1200</td>
-                <td>27/8/2025</td>
-            </tr>
-
-            <tr class="table-row">
-                <td>2</td>
-                <td>Courant</td>
-                <td></td>
-                <td>2800</td>
-                <td>25/3/2024</td>
-            </tr>
+    <?php while($row = mysqli_fetch_assoc($transactionResult)) { ?>
+        <tr class="table-row">
+            <td><?php echo $row['transaction_id']; ?></td>
+            <td><?php echo $row['compte_id']; ?></td>
+            <td><?php echo $row['type_transaction']; ?></td>
+            <td><?php echo $row['montant']; ?></td>
+            <td><?php echo $row['date_transaction']; ?></td>
+        </tr>
+    <?php } ?>
         </table>
     </main>
 
