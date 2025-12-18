@@ -67,14 +67,17 @@ $result = mysqli_query($conn, $query);
         <td><?php echo $client['cin']; ?></td>
         <td><?php echo $client['telephone']; ?></td>
         <td><?php echo $client['date_creation']; ?></td>
+
         <?php if($role === 'admin'){ ?>
         <td class="actions">
-            <a href="edit_client.php?id=<?php echo $client['client_id']; ?>" class="edit">Modifier</a> |
-            <a href="delete_client.php?id=<?php echo $client['client_id']; ?>" class="delete">Supprimer</a>
+            <a class="edit" href="edit_client.php?id=<?php echo $client['client_id']; ?>">
+                Modifier
+            </a>
         </td>
         <?php } ?>
     </tr>
     <?php } ?>
+
 </table>
 </main>
 
