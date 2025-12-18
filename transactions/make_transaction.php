@@ -17,7 +17,7 @@ if(isset($_POST['submit'])){
     $data = mysqli_fetch_assoc($res);
     $solde = $data['solde'];
 
-    if($type === 'withdrawal'){
+    if($type === 'retrait'){
         if($montant > $solde){
             die("Solde insuffisant");
         }
@@ -26,10 +26,9 @@ if(isset($_POST['submit'])){
         $newSolde = $solde + $montant;
     }
 
-    $insertTransaction = "
-        INSERT INTO transactions (compte_id, type_transaction, montant)
-        VALUES ($compte, '$type', $montant)
-    ";
+    $insertTransaction = "INSERT INTO transactions (compte_id,type_transaction, montant)
+                            VALUES ($compte, '$type', $montant)
+                        ";
     mysqli_query($conn, $insertTransaction);
 
     $updateSolde = "
@@ -50,7 +49,7 @@ $result = mysqli_query($conn , $query);
 
 
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -82,9 +81,9 @@ $result = mysqli_query($conn , $query);
                     <?php } ?>
                 </select>
                 <select name="type" required>
-                    <option value="">Type de transaction</option>
-                    <option value="deposit">dépôt</option>
-                    <option value="withdrawal">retrait</option>
+                    <option >Type de transaction</option>
+                    <option value="depot">depot</option>
+                    <option value="retrait">retrait</option>
                 </select>
                 <input type="number" placeholder="Montant" name="montant" required>
                 <button type="submit" name="submit">Valider</button>

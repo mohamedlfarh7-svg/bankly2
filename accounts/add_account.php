@@ -71,6 +71,7 @@ $clientResult = mysqli_query($conn , $clientquery);
             <option value="épargne">Épargne</option>
         </select>
 
+
         <input class="input-field" type="number" placeholder="Solde initial" name="solde" required>
 
         <button id="submit-btn" type="submit" name="submit">Créer le compte</button>

@@ -72,7 +72,9 @@ $accountResult = mysqli_query($conn , $accountQuery);
             <td><?php echo $row['statut']; ?></td>
             <td><?php echo $row['date_creation']; ?></td>
             <td class="actions">
-                <a class="edit">Modifier</a> |
+                <a class="edit" href="edit_account.php?id=<?php echo $row['compte_id']; ?>">
+                    Modifier
+                </a>|
                 <a class="delete">Supprimer</a>
             </td>
         </tr>
