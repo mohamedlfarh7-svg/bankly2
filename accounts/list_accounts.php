@@ -75,7 +75,7 @@ $accountResult = mysqli_query($conn , $accountQuery);
                 <a class="edit" href="edit_account.php?id=<?php echo $row['compte_id']; ?>">
                     Modifier
                 </a>|
-                <a class="delete">Supprimer</a>
+                <a class="delete" href="delete_account.php?id=<?php echo $row['compte_id'];?>">Supprimer</a>
             </td>
         </tr>
     <?php }?>
